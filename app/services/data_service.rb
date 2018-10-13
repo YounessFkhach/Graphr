@@ -1,7 +1,4 @@
 module DataService
-  def generateData
-    get_response url: generate_export_file_url
-  end
 
   def get_all_stations_records(time: DateTime.now, value: :temperature)
     exported_files = supported_stations.map do |station|
@@ -10,7 +7,7 @@ module DataService
   end
 
   def get_station_last_record_at(time:, station:, value:)
-    file_name     = get_exported_file_name(station: station, time: time)
+    file_name     = get_exported_file_name(station: station, start_time: time, end_time: time)
     file_content  = get_exported_file_content(file_name: file_name)
     content_lines = file_content.split("\n")
 
@@ -25,13 +22,13 @@ module DataService
     value.to_f
   end
 
-  def get_exported_file_name(station:, time:)
+  def get_exported_file_name(station:, start_time:, end_time:)
     uri = generate_export_file_url
 
     body = {
       station: station,
-      debut_csv: time.strftime('%Y-%m-%d'),
-      fin_csv: time.strftime('%Y-%m-%d')
+      debut_csv: start_time.strftime('%Y-%m-%d'),
+      fin_csv: end_time.strftime('%Y-%m-%d')
     }
 
     response =  HTTP.headers('content-type': "application/x-www-form-urlencoded")

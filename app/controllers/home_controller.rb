@@ -9,6 +9,6 @@ class HomeController < ApplicationController
 
   private
     def getData
-      
+
     end
 end
