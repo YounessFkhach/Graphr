@@ -5,16 +5,20 @@ class HomeController < ApplicationController
   include DataService
 
   def index
+    date = params['carte-time'].nil? ? DateTime.now : DateTime.parse(params['carte-time'])
+
+    puts date.to_s
+
     # get latest data
-    # hash = get_all_stations_records
+    hash = get_all_stations_records time: date
 
     # write data to csv
-    # update_CSV hash[:data]
+    update_CSV hash[:data]
 
-    # @time = hash[:time]
+    @time = hash[:time]
 
     # run Matlab script
-    # system 'bash /Users/mac/workspace/abdellatif/Graphr/for_testing/run_qepshow.sh /Applications/MATLAB_R2018a.app/'
+    system 'bash /Users/mac/workspace/abdellatif/Graphr/for_testing/run_qepshow.sh /Applications/MATLAB_R2018a.app/'
 
     # get the generated image
     @path = Dir.glob("app/assets/images/*.png").max_by {|f| File.mtime(f)}.split('/').last

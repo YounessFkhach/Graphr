@@ -19,7 +19,11 @@ module DataService
 
     time_string   = time.strftime('%Y-%m-%d;%I:%M:%S')
 
+    puts time_string
+
     last_record = content_lines.detect { |line| line.include? time_string }
+    last_record = content_lines.sample if last_record.nil?
+
     value = last_record.split(";")[value_index]
 
     value.to_f

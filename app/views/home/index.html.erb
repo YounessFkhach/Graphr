@@ -345,14 +345,15 @@
               <div class="col-lg-8 col-md-12 col-sm-12 mb-4">
                 <div class="card card-small">
                   <div class="card-header border-bottom">
-                    <h6 class="m-0">La carte</h6>
+                    <h6 class="m-0">La carte  <i> le: <%=  @time.to_s %> </i></h6>
                   </div>
                   <div class="card-body pt-0">
-                    <div class="row border-bottom py-2 bg-light">
-                      <form action="/home" method="get">
+                    <form action="/home" method="get">
+                      <div class="row border-bottom py-2 bg-light">
                         <div class="col-12 col-sm-6">
-                          <div id="blog-overview-date-range" class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0" style="max-width: 350px;">
-                            <input type="text" class="input-sm form-control" name="date" placeholder="date de début" id="blog-overview-date-range-1">
+                          <div class="input-daterange input-group input-group-sm my-auto ml-auto mr-auto ml-sm-auto mr-sm-0" style="max-width: 350px;">
+                            <%# <input type="text" class="input-sm form-control" name="carte-date" placeholder="date" id="blog-overview-date-range-1"> %>
+                             <input type="datetime-local" class="input-sm form-control" name="carte-time">
                             <span class="input-group-append">
                               <span class="input-group-text">
                                 <i class="material-icons"></i>
@@ -363,8 +364,8 @@
                         <div class="col-12 col-sm-6 d-flex mb-2 mb-sm-0">
                           <button type="submit" class="btn btn-sm btn-white ml-auto mr-auto ml-sm-auto mr-sm-0 mt-3 mt-sm-0">voir la date →</button>
                         </div>
-                      </form>
-                    </div>
+                      </div>
+                    </form>
                     <div class="crop">
                       <%= image_tag(@path, tag_name: 'carte') %>
                     </div>
