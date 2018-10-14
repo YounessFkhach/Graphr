@@ -1,9 +1,13 @@
 module DataService
 
   def get_all_stations_records(time: DateTime.now, value: :temperature)
+    floored_time  = floor_to_last_15 time
+
     exported_files = supported_stations.map do |station|
-      get_station_last_record_at(time: time, station: station, value: value)
+      get_station_last_record_at(time: floored_time, station: station, value: value)
     end
+
+    { data: exported_files, time: floored_time }
   end
 
   def get_station_last_record_at(time:, station:, value:)
@@ -13,8 +17,7 @@ module DataService
 
     value_index   = index_of_value value
 
-    floored_time  = floor_to_last_15 time
-    time_string   = floored_time.strftime('%Y-%m-%d;%I:%M:%S')
+    time_string   = time.strftime('%Y-%m-%d;%I:%M:%S')
 
     last_record = content_lines.detect { |line| line.include? time_string }
     value = last_record.split(";")[value_index]
@@ -67,7 +70,7 @@ module DataService
   end
 
   def supported_stations
-    %i[Tagoute meteo_temsia_temsia meteo_soema]
+    ["Aya", "meteo_ainmedior_kedima", "meteo_aitmelloul_iavcha", "meteo_aoulouz_delasuss", "meteo_apefel", "meteo_cmv805", "Meteo_CMV_khmiss_aitamira", "Meteo_DZIR1", "meteo_elguerdan_dak", "meteo_hanssala_kayouh", "meteo_houara_kayouh", "meteo_igoudar_benamour", "meteo_indaouzal_rafi", "meteo_lastah_oultiti", "meteo_ouledaissa_taoufiq", "meteo_ouleddriss_citatlas", "meteo_ouledtiema_saouda", "Meteo_Qualiprime_19", "meteo_soema", "meteo_temsia_temsia"]
   end
 
   def supported_values
